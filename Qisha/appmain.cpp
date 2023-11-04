@@ -33,6 +33,8 @@ void appmain::loop()
         if (IsKeyDown(KEY_UP)) Qisha.PosY -= Qisha.Spd;
         if (IsKeyDown(KEY_DOWN)) Qisha.PosY += Qisha.Spd;
 
+        //if still, recover energy
+        if (!IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && (Qisha.Scale < 100) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk)) > ms(500)) Qisha.Scale += 0.3;
         //atk
         if (IsKeyReleased(KEY_SPACE) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.AtkCooldown) && (Qisha.Scale > 10))
         {
@@ -41,7 +43,7 @@ void appmain::loop()
         }
         else if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.ScaleCooldown) && (Qisha.Scale < 100))
         {
-            Qisha.Scale += 0.1;
+            Qisha.Scale += 0.2;
 
         }
         //----------------------------------------------------------------------------------
@@ -53,7 +55,7 @@ void appmain::loop()
         ClearBackground(BkgCol);
 
         //draw char
-        DrawCircle(Qisha.PosX, Qisha.PosY, Qisha.BaseSize * Qisha.Scale / 10, Qisha.CharCol);
+        DrawCircle(Qisha.PosX, Qisha.PosY, Qisha.BaseSize * Qisha.Scale / 20, Qisha.CharCol);
 
         //draw atk
         //currently just a ring of fire
@@ -64,8 +66,8 @@ void appmain::loop()
         //draw UI
         //draw scale bar txt
         DrawText((std::to_string(Qisha.Scale)).c_str(), 10, 10, 20, DARKGRAY);
-        DrawRectangle(1100, 150, 50, 500, BLACK);//bar
-        DrawRectangle(1100, 150, 50, 500*((100-Qisha.Scale)/100), RED);//bkg
+        DrawRectangle(1700, 200, 30, 600, BLACK);//bar
+        DrawRectangle(1700, 200, 30, 600*((100-Qisha.Scale)/100), RED);//bkg
 
         EndDrawing();
         //----------------------------------------------------------------------------------

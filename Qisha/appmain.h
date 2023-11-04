@@ -17,6 +17,7 @@ struct mainchar {
 	//to scale
 	//const float minSpd = 0.5;
 	//const float maxSpd = 50;	
+	int health;
 	float Scale; //from 1-100
 	ms ScaleCooldown = ms(2000);//in ms
 	int BaseSize;//size
@@ -36,8 +37,8 @@ class appmain
 {
 private:
 	mainchar Qisha;
-	const int screenHeight = 800;
-	const int screenWidth = 1200;
+	const int screenHeight = 1000;
+	const int screenWidth = 1800;
 	const Color BkgCol = WHITE;
 public:
 	void run();
