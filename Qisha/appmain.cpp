@@ -52,13 +52,16 @@ void appmain::loop()
 
         ClearBackground(BkgCol);
 
-        //draw scale bar txt
-        DrawText((std::to_string(Qisha.Scale)).c_str(), 10, 10, 20, DARKGRAY);
-
         //draw char
         DrawCircle(Qisha.PosX, Qisha.PosY, Qisha.BaseSize*Qisha.Scale/10, Qisha.CharCol);
 
         //draw atk
+
+        //draw UI
+        //draw scale bar txt
+        DrawText((std::to_string(Qisha.Scale)).c_str(), 10, 10, 20, DARKGRAY);
+        DrawRectangle(1100, 150, 50, 500, BLACK);//bar
+        DrawRectangle(1100, 150, 50, 500*((100-Qisha.Scale)/100), RED);//bkg
 
         EndDrawing();
         //----------------------------------------------------------------------------------

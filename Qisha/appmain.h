@@ -25,6 +25,7 @@ struct mainchar {
 	int PosX,PosY;
 	float Spd;
 
+	int AtkRng;
 	ms AtkCooldown = ms(500);//in ms;
 	time_point<Clock> LastAtk;
 
