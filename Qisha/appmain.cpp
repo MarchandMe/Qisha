@@ -26,7 +26,7 @@ void appmain::loop()
     {
         // Update
         //----------------------------------------------------------------------------------
-        Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 40;
+        Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 20;
         //std::cout << Qisha.Spd <<std::endl;
         if (IsKeyDown(KEY_RIGHT)) Qisha.PosX += Qisha.Spd;
         if (IsKeyDown(KEY_LEFT)) Qisha.PosX -= Qisha.Spd;
@@ -36,7 +36,7 @@ void appmain::loop()
         //if still, recover energy
         if (!IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_UP) && !IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT) && (Qisha.Scale < 100) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk)) > ms(500)) Qisha.Scale += 0.3;
         //atk
-        if (IsKeyReleased(KEY_SPACE) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.AtkCooldown) && (Qisha.Scale > 10))
+        if (IsKeyDown(KEY_SPACE) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.AtkCooldown) && (Qisha.Scale > 10))
         {
             Qisha.Scale -= 10;
             Qisha.LastAtk = Clock::now();
