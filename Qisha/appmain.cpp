@@ -26,7 +26,7 @@ void appmain::loop()
     {
         // Update
         //----------------------------------------------------------------------------------
-        Qisha.Spd = Qisha.BaseSpd*(105-Qisha.Scale)/40;
+        Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 40;
         //std::cout << Qisha.Spd <<std::endl;
         if (IsKeyDown(KEY_RIGHT)) Qisha.PosX += Qisha.Spd;
         if (IsKeyDown(KEY_LEFT)) Qisha.PosX -= Qisha.Spd;
@@ -34,15 +34,15 @@ void appmain::loop()
         if (IsKeyDown(KEY_DOWN)) Qisha.PosY += Qisha.Spd;
 
         //atk
-        if (IsKeyReleased(KEY_SPACE)&&(duration_cast<ms>(Clock::now()-Qisha.LastAtk)>Qisha.AtkCooldown) && (Qisha.Scale >10))
+        if (IsKeyReleased(KEY_SPACE) && (duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.AtkCooldown) && (Qisha.Scale > 10))
         {
             Qisha.Scale -= 10;
             Qisha.LastAtk = Clock::now();
         }
-        else if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.ScaleCooldown)&&(Qisha.Scale<100))
+        else if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.ScaleCooldown) && (Qisha.Scale < 100))
         {
             Qisha.Scale += 0.1;
-            
+
         }
         //----------------------------------------------------------------------------------
 
@@ -53,10 +53,14 @@ void appmain::loop()
         ClearBackground(BkgCol);
 
         //draw char
-        DrawCircle(Qisha.PosX, Qisha.PosY, Qisha.BaseSize*Qisha.Scale/10, Qisha.CharCol);
+        DrawCircle(Qisha.PosX, Qisha.PosY, Qisha.BaseSize * Qisha.Scale / 10, Qisha.CharCol);
 
         //draw atk
-
+        //currently just a ring of fire
+        if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk)) < ms(200)) {
+            Vector2 center = { Qisha.PosX, Qisha.PosY };
+            DrawRing(center, Qisha.BaseSize * Qisha.Scale / 10 + 10, Qisha.BaseSize * Qisha.Scale / 10 + 15, 0, 360.0f, 0, DARKGREEN);
+        }
         //draw UI
         //draw scale bar txt
         DrawText((std::to_string(Qisha.Scale)).c_str(), 10, 10, 20, DARKGRAY);
