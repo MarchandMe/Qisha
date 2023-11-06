@@ -11,9 +11,9 @@ void appmain::init()
 	InitWindow(screenWidth, screenHeight, "QISHA");
 	SetTargetFPS(60);
 	//set st vars
-	Qisha.Scale = 100;
-	Qisha.BaseSize = screenWidth / 100;
-	Qisha.BaseSpd = screenHeight / 100;
+	Qisha.Scale = 40;//smaller starting size &higher spd
+	Qisha.BaseSize = screenWidth / 200;
+	Qisha.BaseSpd = screenWidth / 100;
 	Qisha.PosX = screenWidth / 2;
 	Qisha.PosY = screenHeight / 2;
 
@@ -26,7 +26,7 @@ void appmain::loop()
     {
         // Update
         //----------------------------------------------------------------------------------
-        Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 20;
+        Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 40;
         //std::cout << Qisha.Spd <<std::endl;
         if (IsKeyDown(KEY_RIGHT)) Qisha.PosX += Qisha.Spd;
         if (IsKeyDown(KEY_LEFT)) Qisha.PosX -= Qisha.Spd;

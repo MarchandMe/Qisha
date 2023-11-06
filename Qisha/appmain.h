@@ -33,6 +33,18 @@ struct mainchar {
 	Color CharCol;
 };
 
+struct projectile {
+	int PosX, PosY;
+	int Size;
+	float BaseSpd;
+	float BaseAtk;
+	float Spd;
+	float Atk;
+
+
+};
+
+
 class appmain
 {
 private:
