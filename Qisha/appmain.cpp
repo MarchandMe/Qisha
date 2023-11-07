@@ -26,6 +26,10 @@ void appmain::loop()
     {
         // Update
         //----------------------------------------------------------------------------------
+        
+        //get mouse dir
+        Vector2 MousePos = GetMousePosition();
+        
         Qisha.Spd = Qisha.BaseSpd * (105 - Qisha.Scale) / 40;
         //std::cout << Qisha.Spd <<std::endl;
         if (IsKeyDown(KEY_RIGHT)) Qisha.PosX += Qisha.Spd;
@@ -40,11 +44,29 @@ void appmain::loop()
         {
             Qisha.Scale -= 10;
             Qisha.LastAtk = Clock::now();
+            std::shared_ptr<projectile> new_proj(new projectile());
+            new_proj->PosX = Qisha.PosX;
+            new_proj->PosY = Qisha.PosY;
+            new_proj->Atk = new_proj->BaseAtk * (1 / Qisha.Scale);
+            new_proj->Spd = new_proj->BaseSpd * (1 / Qisha.Scale);
+            Vector2 cpos = { Qisha.PosX, Qisha.PosY };
+            new_proj->Dir = Vector2Angle(cpos, MousePos);
+            projs.emplace_back(new_proj);
         }
         else if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk) > Qisha.ScaleCooldown) && (Qisha.Scale < 100))
         {
             Qisha.Scale += 0.2;
 
+        }
+
+        //Handle Atks
+        for (std::shared_ptr<projectile> p : projs) 
+        {
+            //tbd::handle destruction and damage
+            //move all
+            float totalmov = p->Spd;
+            p->PosX += sin(p->Dir)*totalmov;
+            p->PosY += cos(p->Dir)*totalmov;
         }
         //----------------------------------------------------------------------------------
 
@@ -62,6 +84,10 @@ void appmain::loop()
         if ((duration_cast<ms>(Clock::now() - Qisha.LastAtk)) < ms(200)) {
             Vector2 center = { Qisha.PosX, Qisha.PosY };
             DrawRing(center, Qisha.BaseSize * Qisha.Scale / 10 + 10, Qisha.BaseSize * Qisha.Scale / 10 + 15, 0, 360.0f, 0, DARKGREEN);
+        }
+        for (std::shared_ptr<projectile> p : projs)
+        {
+            DrawCircle(p->PosX, p->PosY, p->Size, Qisha.CharCol);
         }
         //draw UI
         //draw scale bar txt

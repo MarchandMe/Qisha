@@ -4,6 +4,9 @@
 #include <iostream>
 #include <chrono>
 #include <string>
+#include <vector>
+#include <memory>
+#include <cmath>
 
 using Clock = std::chrono::steady_clock;
 using std::chrono::time_point;
@@ -12,6 +15,7 @@ using std::chrono::duration_cast;
 typedef std::chrono::milliseconds ms;
 using namespace std::literals::chrono_literals;
 using std::string;
+using std::vector;
 
 struct mainchar {
 	//to scale
@@ -35,12 +39,12 @@ struct mainchar {
 
 struct projectile {
 	int PosX, PosY;
-	int Size;
-	float BaseSpd;
-	float BaseAtk;
+	int Size = 15;
+	float BaseSpd = 10;
+	float BaseAtk = 10;
 	float Spd;
 	float Atk;
-
+	float Dir;
 
 };
 
@@ -52,6 +56,7 @@ private:
 	const int screenHeight = 1000;
 	const int screenWidth = 1800;
 	const Color BkgCol = WHITE;
+	std::vector<std::shared_ptr<projectile>> projs;
 public:
 	void run();
 	void init();
