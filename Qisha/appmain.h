@@ -26,6 +26,7 @@ struct mainchar {
 	ms ScaleCooldown = ms(2000);//in ms
 	int BaseSize;//size
 	float BaseSpd;
+	float Jmpheight;
 
 	int PosX,PosY;
 	float Spd;
@@ -48,18 +49,38 @@ struct projectile {
 
 };
 
+enum hiteffect {
+	STOP,
+};
+
+struct object {
+	Rectangle disp;
+	Rectangle hitbox;
+	hiteffect eff = STOP;
+};
 
 class appmain
 {
 private:
 	mainchar Qisha;
+	object floor;
+
+	float gravity;
 	const int screenHeight = 1000;
 	const int screenWidth = 1800;
 	const Color BkgCol = WHITE;
 	std::vector<std::shared_ptr<projectile>> projs;
+	std::vector<std::shared_ptr<object>> obj;
+
+	bool ifTitle = true;
+
+private:
+	void init();
+	void title();
+	void loop();
+
+	void moveChar(float dist, float dir); //to check for collision detection
 public:
 	void run();
-	void init();
-	void loop();
 };
 
